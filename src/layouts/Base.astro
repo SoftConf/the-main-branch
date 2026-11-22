@@ -1,0 +1,70 @@
+---
+import '@fontsource/barlow/400.css';
+import '@fontsource/barlow/500.css';
+import '@fontsource/barlow/600.css';
+import '@fontsource/barlow/700.css';
+import '@fontsource/barlow-semi-condensed/600.css';
+import '@fontsource/barlow-semi-condensed/700.css';
+import '@fontsource/jetbrains-mono/400.css';
+import '@fontsource/jetbrains-mono/500.css';
+import '../styles/global.css';
+import site from '../data/site.json';
+import Icon from '../components/Icon.astro';
+import { url, isExternal } from '../lib.js';
+
+const { title, description = site.description } = Astro.props;
+const pageTitle = title ? `${title} – ${site.name}` : `${site.name} – ${site.tagline}`;
+const canonical = new URL(Astro.url.pathname, Astro.site);
+const ext = (href) => (isExternal(href) ? { target: '_blank', rel: 'noopener' } : {});
+const subscribe = site.channels.find((c) => c.primary) ?? site.channels[0];
+---
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{pageTitle}</title>
+    <meta name="description" content={description} />
+    <link rel="canonical" href={canonical} />
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content={pageTitle} />
+    <meta property="og:description" content={description} />
+    <meta property="og:url" content={canonical} />
+    <meta property="og:image" content={new URL(url(site.logo.full), Astro.site)} />
+    <meta name="theme-color" content="#1F313D" />
+    <link rel="icon" sizes="32x32" href={url('/images/favicon-32.png')} />
+    <link rel="icon" sizes="192x192" href={url('/images/favicon-192.png')} />
+    <link rel="apple-touch-icon" href={url('/images/favicon-192.png')} />
+    <slot name="head" />
+  </head>
+  <body>
+    <a class="skip-link" href="#main">Skip to content</a>
+
+    <header class="site-header">
+      <div class="container site-header-inner">
+        <a class="site-logo" href={url('/')}>
+          <img src={url(site.logo.mark)} alt="" width="76" height="52" />
+          <span class="wordmark"><span class="cyan">Main</span> <span class="orange">Branch</span></span>
+        </a>
+        <span class="cities"><span class="orange">Athens</span> ⇄ <span class="cyan">Thessaloniki</span></span>
+        <nav class="site-nav" aria-label="Main menu">
+          {site.menu.map((item) => <a href={url(item.href)} {...ext(item.href)}>{item.label}</a>)}
+          <a class="btn btn-line" href={subscribe.href} target="_blank" rel="noopener"><Icon name={subscribe.icon} />Subscribe</a>
+        </nav>
+      </div>
+    </header>
+
+    <main id="main">
+      <slot />
+    </main>
+
+    <footer class="site-footer">
+      <div class="container site-footer-inner">
+        <span>The <span class="orange">Devoxx Greece</span> &amp; <span class="cyan">Voxxed Days Thessaloniki</span> podcast.</span>
+        <nav aria-label="Channels">
+          {site.channels.map((c) => <a class="channel" href={c.href} target="_blank" rel="noopener"><Icon name={c.icon} />{c.label}</a>)}
+        </nav>
+      </div>
+    </footer>
+  </body>
+</html>

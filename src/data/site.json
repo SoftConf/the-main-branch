@@ -1,0 +1,54 @@
+{
+  "name": "Main Branch Podcast",
+  "tagline": "The Devoxx Greece & Voxxed Days Thessaloniki podcast",
+  "description": "The official podcast of Devoxx Greece and Voxxed Days Thessaloniki. Deep dives into architecture, backend, AI and DevOps, with the people who ship it.",
+  "repo": "https://github.com/SoftConf/the-main-branch",
+  "logo": {
+    "mark": "/images/logo-mark.jpg",
+    "full": "/images/logo-full.jpg"
+  },
+  "hero": {
+    "eyebrow": "HEAD → main",
+    "titleStart": "Conversations worth",
+    "titleAccent": "merging.",
+    "pitch": "The Devoxx Greece and Voxxed Days Thessaloniki podcast. Deep dives into architecture, backend, AI and DevOps, with the people who ship it."
+  },
+  "channels": [
+    { "label": "YouTube", "icon": "youtube", "href": "https://www.youtube.com/@MainBranch_VidCast", "primary": true, "cta": "Watch on YouTube" },
+    { "label": "Spotify", "icon": "spotify", "href": "https://open.spotify.com/show/033HMtKOR9Yn8BXjsyjbra" },
+    { "label": "Instagram", "icon": "instagram", "href": "https://www.instagram.com/themainbranch_podcast/" },
+    { "label": "TikTok", "icon": "tiktok", "href": "https://www.tiktok.com/@the.main.branch" }
+  ],
+  "menu": [
+    { "label": "Episodes", "href": "/#episodes" },
+    { "label": "Conferences", "href": "/#conferences" },
+    { "label": "Suggest a topic", "href": "/#suggest" }
+  ],
+  "topics": ["Careers", "Ecosystem", "Community"],
+  "conferences": [
+    {
+      "remote": "origin/athens",
+      "city": "Athens",
+      "name": "Devoxx Greece",
+      "color": "orange",
+      "text": "Speakers from the Athens stage, back at the microphone with time to go deeper than a session slot allows.",
+      "next": "Next edition: 15–17 April 2027",
+      "href": "https://devoxx.gr/"
+    },
+    {
+      "remote": "origin/thessaloniki",
+      "city": "Thessaloniki",
+      "name": "Voxxed Days Thessaloniki",
+      "color": "cyan",
+      "text": "Conversations with the people who speak at, and build, the conference in the north.",
+      "next": "",
+      "href": "https://voxxeddays.com/thessaloniki/"
+    }
+  ],
+  "suggest": {
+    "eyebrow": "contributions welcome",
+    "title": "Open a pull request.",
+    "text": "Is there a topic we should cover, or someone we should talk to? Send it in. Every suggestion gets a review.",
+    "note": "Opens a new issue on GitHub with your idea filled in."
+  }
+}

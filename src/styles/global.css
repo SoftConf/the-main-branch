@@ -1,0 +1,653 @@
+/* Colours are taken from the Main Branch logo. */
+:root {
+  --navy: #1f313d;
+  --navy-deep: #182631;
+  --ink: #14222c;
+  --line: #3a5262;
+  --line-soft: #2c4250;
+  --text: #e6f2f6;
+  --text-soft: #c3d3db;
+  --muted: #a9beca;
+  --cyan: #48e0f8;
+  --orange: #f89038;
+  --font-body: 'Barlow', 'DIN Alternate', 'Helvetica Neue', Arial, sans-serif;
+  --font-display: 'Barlow Semi Condensed', 'DIN Condensed', 'Arial Narrow', sans-serif;
+  --font-mono: 'JetBrains Mono', ui-monospace, Menlo, monospace;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+  color-scheme: dark;
+}
+
+body {
+  margin: 0;
+  background: var(--navy);
+  color: var(--text);
+  font-family: var(--font-body);
+  font-size: 18px;
+  line-height: 1.5;
+}
+
+img {
+  max-width: 100%;
+  height: auto;
+  display: block;
+}
+
+a {
+  color: inherit;
+}
+
+a:hover {
+  color: var(--cyan);
+}
+
+:focus-visible {
+  outline: 2px solid var(--cyan);
+  outline-offset: 3px;
+}
+
+h1,
+h2,
+h3,
+p {
+  margin: 0;
+}
+
+[hidden] {
+  display: none !important;
+}
+
+.container {
+  max-width: 1280px;
+  margin: 0 auto;
+  padding-inline: 32px;
+}
+
+.mono {
+  font-family: var(--font-mono);
+  font-size: 14px;
+}
+
+.cyan {
+  color: var(--cyan);
+}
+
+.orange {
+  color: var(--orange);
+}
+
+.skip-link {
+  position: absolute;
+  left: -9999px;
+}
+
+.skip-link:focus {
+  left: 16px;
+  top: 16px;
+  z-index: 10;
+  background: var(--cyan);
+  color: var(--ink);
+  padding: 10px 16px;
+}
+
+/* Buttons and links */
+.icon {
+  flex: none;
+}
+
+.channel {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-weight: 500;
+  padding: 12px 0;
+  text-decoration: none;
+}
+
+.channel:hover {
+  text-decoration: underline;
+}
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  text-decoration: none;
+  font-weight: 700;
+  padding: 15px 26px;
+  border-radius: 2px;
+}
+
+.btn-cyan {
+  background: var(--cyan);
+  color: var(--ink);
+}
+
+.btn-cyan:hover {
+  background: #7feaff;
+  color: var(--ink);
+}
+
+.btn-line {
+  border: 1.5px solid var(--cyan);
+  color: var(--cyan);
+  padding: 12px 22px;
+  font-weight: 600;
+}
+
+.btn-line:hover {
+  background: var(--cyan);
+  color: var(--ink);
+}
+
+.text-link {
+  font-weight: 500;
+  padding: 12px 0;
+}
+
+/* Header */
+.site-header-inner {
+  padding-block: 24px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16px 40px;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.site-logo {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  text-decoration: none;
+}
+
+.site-logo img {
+  width: 76px;
+  height: 52px;
+  object-fit: cover;
+  border-radius: 4px;
+}
+
+.wordmark {
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: 24px;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  line-height: 1;
+}
+
+.cities {
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: 19px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--text-soft);
+}
+
+.site-nav {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px 32px;
+  align-items: center;
+  font-size: 17px;
+  font-weight: 500;
+}
+
+.site-nav a:not(.btn) {
+  text-decoration: none;
+  padding: 12px 0;
+}
+
+/* Hero */
+.hero {
+  padding-block: 56px 88px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 48px 64px;
+  align-items: center;
+}
+
+.hero-copy {
+  flex: 999 1 520px;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 26px;
+}
+
+.hero h1 {
+  font-family: var(--font-display);
+  font-size: clamp(44px, 6vw, 86px);
+  line-height: 0.98;
+  font-weight: 700;
+  text-transform: uppercase;
+  text-wrap: balance;
+}
+
+.hero-pitch {
+  max-width: 540px;
+  font-size: 20px;
+  color: var(--text-soft);
+}
+
+.channel-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px 28px;
+  align-items: center;
+  font-size: 17px;
+}
+
+.hero-logo {
+  flex: 1 1 460px;
+  min-width: 0;
+}
+
+.hero-logo img {
+  width: 100%;
+  border: 1px solid var(--line);
+  border-radius: 4px;
+}
+
+/* Episode log */
+.log {
+  background: var(--navy-deep);
+  border-top: 1px solid var(--line);
+  padding-block: 56px 72px;
+}
+
+.log-head {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px 40px;
+  align-items: baseline;
+  justify-content: space-between;
+  margin-bottom: 36px;
+}
+
+.log-head h2 {
+  font-size: 26px;
+  font-weight: 500;
+}
+
+.filters {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.filters button {
+  font: inherit;
+  font-size: 15px;
+  font-weight: 500;
+  color: var(--text);
+  background: transparent;
+  border: 1.5px solid var(--line);
+  padding: 11px 16px;
+  cursor: pointer;
+}
+
+.filters button:hover {
+  border-color: var(--cyan);
+}
+
+.filters button.is-active {
+  background: var(--cyan);
+  border-color: var(--cyan);
+  color: var(--ink);
+  font-weight: 600;
+}
+
+.commits {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.commit {
+  display: grid;
+  grid-template-columns: 72px minmax(0, 1fr);
+  min-height: 112px;
+}
+
+/* The graph column: the cyan line is main, orange curves are guest branches. */
+.graph {
+  position: relative;
+}
+
+.graph .line {
+  position: absolute;
+  left: 15px;
+  top: 0;
+  bottom: 0;
+  width: 2px;
+  background: var(--cyan);
+}
+
+.commit:first-child .graph .line {
+  top: 50%;
+}
+
+.commit:last-child .graph .line {
+  bottom: 50%;
+}
+
+.graph .node {
+  position: absolute;
+  left: 8px;
+  top: 50%;
+  margin-top: -8px;
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  background: var(--navy-deep);
+  border: 2px solid var(--cyan);
+}
+
+.is-head .graph .node {
+  left: 6px;
+  margin-top: -10px;
+  width: 20px;
+  height: 20px;
+  border: 0;
+  background: var(--cyan);
+  box-shadow: 0 0 0 5px #24505f, 0 0 22px var(--cyan);
+}
+
+.is-branch .graph svg {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 72px;
+  height: 100%;
+  fill: none;
+  stroke: var(--orange);
+  stroke-width: 2;
+}
+
+.is-branch .graph .node {
+  left: 40px;
+  border: 0;
+  background: var(--orange);
+  box-shadow: 0 0 16px var(--orange);
+}
+
+.commit-body {
+  border-bottom: 1px solid var(--line-soft);
+  padding: 22px 0;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px 32px;
+  align-items: center;
+}
+
+.commit:last-child .commit-body {
+  border-bottom: 0;
+}
+
+.commit-id {
+  width: 96px;
+  color: var(--muted);
+}
+
+.is-head .commit-id {
+  color: var(--cyan);
+}
+
+.commit-title {
+  flex: 999 1 380px;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  font-size: 16px;
+  color: var(--muted);
+}
+
+.commit-title a {
+  text-decoration: none;
+  font-size: 25px;
+  font-weight: 600;
+  line-height: 1.2;
+  color: var(--text);
+}
+
+.commit-title a:hover {
+  color: var(--cyan);
+}
+
+.commit-title .mono {
+  font-size: 13px;
+}
+
+.tag {
+  font-size: 14px;
+  font-weight: 500;
+  padding: 6px 10px;
+  border: 1px solid #5e7888;
+}
+
+.duration {
+  font-size: 13px;
+  color: var(--muted);
+}
+
+.play {
+  display: flex;
+  gap: 20px;
+}
+
+.play a {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  font-size: 16px;
+  font-weight: 600;
+  padding: 12px 0;
+  text-decoration: none;
+  color: var(--muted);
+}
+
+.play a:first-child {
+  color: var(--cyan);
+}
+
+.play a:hover {
+  text-decoration: underline;
+}
+
+.log-empty {
+  color: var(--muted);
+  padding: 24px 0 0 72px;
+}
+
+/* Conferences */
+.conferences {
+  border-top: 1px solid var(--line);
+  padding-block: 80px;
+}
+
+.conferences h2,
+.suggest h2 {
+  font-family: var(--font-display);
+  font-size: clamp(38px, 4.8vw, 68px);
+  line-height: 1;
+  font-weight: 700;
+  text-transform: uppercase;
+  text-wrap: balance;
+}
+
+.conferences h2 {
+  margin: 16px 0 36px;
+}
+
+.conference-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(420px, 100%), 1fr));
+  gap: 0 56px;
+  border-block: 1px solid var(--line);
+}
+
+.conference {
+  padding: 32px 0;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 14px;
+}
+
+.conference .mono,
+.conference .next {
+  color: var(--muted);
+}
+
+.conference .next {
+  font-size: 17px;
+}
+
+.conference h3 {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 44px;
+  line-height: 1;
+  text-transform: uppercase;
+}
+
+.conference p {
+  max-width: 480px;
+  color: var(--text-soft);
+}
+
+.conference .text-link {
+  font-size: 17px;
+  font-weight: 600;
+}
+
+/* Suggest a topic */
+.suggest {
+  background: var(--orange);
+  color: var(--ink);
+  padding-block: 80px;
+}
+
+.suggest-inner {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 40px 72px;
+  align-items: flex-end;
+}
+
+.suggest-copy {
+  flex: 999 1 460px;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.suggest-copy p:last-child {
+  max-width: 520px;
+  font-size: 20px;
+}
+
+.suggest-form {
+  flex: 1 1 420px;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.suggest-form label {
+  font-size: 15px;
+  font-weight: 600;
+}
+
+.suggest-form input,
+.suggest-form textarea {
+  padding: 14px 16px;
+  border: 2px solid var(--ink);
+  border-radius: 2px;
+  background: transparent;
+  color: var(--ink);
+  font: inherit;
+  font-size: 17px;
+}
+
+.suggest-form ::placeholder {
+  color: #5a3a12;
+}
+
+.suggest-form :focus-visible {
+  outline-color: var(--ink);
+}
+
+.suggest-form button {
+  height: 54px;
+  border: 0;
+  border-radius: 2px;
+  background: var(--ink);
+  color: var(--text);
+  font: inherit;
+  font-size: 17px;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.suggest-form button:hover {
+  background: #000;
+}
+
+.suggest-form small {
+  font-size: 14px;
+}
+
+/* Footer */
+.site-footer-inner {
+  padding-block: 48px 64px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 24px 48px;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 16px;
+  color: var(--muted);
+}
+
+.site-footer nav {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px 28px;
+  font-weight: 500;
+}
+
+.site-footer nav a {
+  padding: 12px 0;
+}
+
+@media (max-width: 600px) {
+  .container {
+    padding-inline: 20px;
+  }
+
+  .commit-id {
+    width: auto;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+}

@@ -1,0 +1,168 @@
+---
+import Base from '../layouts/Base.astro';
+import site from '../data/site.json';
+import episodes from '../data/episodes.json';
+import Icon from '../components/Icon.astro';
+import { url } from '../lib.js';
+
+const list = [...episodes].sort((a, b) => b.number - a.number);
+const pad = (n) => String(n).padStart(3, '0');
+const primary = site.channels.find((c) => c.primary) ?? site.channels[0];
+const others = site.channels.filter((c) => c !== primary);
+
+const jsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'PodcastSeries',
+  name: site.name,
+  description: site.description,
+  url: Astro.site,
+  image: new URL(url(site.logo.full), Astro.site),
+  publisher: { '@type': 'Organization', name: 'SoftConf' },
+  sameAs: site.channels.map((c) => c.href),
+};
+---
+<Base>
+  <script slot="head" type="application/ld+json" set:html={JSON.stringify(jsonLd)} />
+
+  <!-- Hero -->
+  <section class="hero container">
+    <div class="hero-copy">
+      <p class="mono cyan">{site.hero.eyebrow}</p>
+      <h1>{site.hero.titleStart} <span class="orange">{site.hero.titleAccent}</span></h1>
+      <p class="hero-pitch">{site.hero.pitch}</p>
+      <div class="channel-row">
+        <a class="btn btn-cyan" href={primary.href} target="_blank" rel="noopener"><Icon name={primary.icon} size={22} />{primary.cta ?? primary.label}</a>
+        {others.map((c) => <a class="channel" href={c.href} target="_blank" rel="noopener"><Icon name={c.icon} />{c.label}</a>)}
+      </div>
+    </div>
+    <div class="hero-logo">
+      <img src={url(site.logo.full)} alt="Main Branch Podcast logo" width="1600" height="872" />
+    </div>
+  </section>
+
+  <!-- Episodes: the commit log -->
+  <section class="log" id="episodes">
+    <div class="container">
+      <div class="log-head">
+        <h2 class="mono cyan">git log --episodes</h2>
+        <div class="filters" role="group" aria-label="Filter episodes by topic">
+          <button type="button" class="is-active" data-filter="all" aria-pressed="true">All</button>
+          {site.topics.map((t) => <button type="button" data-filter={t} aria-pressed="false">{t}</button>)}
+        </div>
+      </div>
+
+      <ol class="commits">
+        {list.map((ep, i) => {
+          const head = i === 0;
+          const branch = !head && Boolean(ep.branch);
+          const main = ep.youtube ?? ep.spotify;
+          return (
+            <li class:list={['commit', { 'is-head': head, 'is-branch': branch }]} data-topic={ep.topic}>
+              <div class="graph" aria-hidden="true">
+                <span class="line"></span>
+                {branch && (
+                  <svg viewBox="0 0 72 112" preserveAspectRatio="none">
+                    <path d="M16 112 C16 84 48 84 48 56" />
+                    <path d="M48 56 C48 28 16 28 16 0" />
+                  </svg>
+                )}
+                <span class="node"></span>
+              </div>
+              <div class="commit-body">
+                <span class="mono commit-id">{pad(ep.number)}{head && ' · HEAD'}</span>
+                <div class="commit-title">
+                  <a href={main} target="_blank" rel="noopener">{ep.title}</a>
+                  {ep.guests
+                    ? <span>{branch && <><span class="mono orange">{ep.branch}</span> · </>}with {ep.guests}{branch && ' · merged into main'}</span>
+                    : ep.note && <span>{ep.note}</span>}
+                </div>
+                <span class="tag">{ep.topic}</span>
+                <span class="mono duration">{ep.date} · {ep.duration}</span>
+                <span class="play">
+                  {ep.youtube && <a href={ep.youtube} target="_blank" rel="noopener" aria-label={`Watch episode ${pad(ep.number)} on YouTube: ${ep.title}`}><Icon name="youtube" />Watch</a>}
+                  {ep.spotify && <a href={ep.spotify} target="_blank" rel="noopener" aria-label={`Listen to episode ${pad(ep.number)} on Spotify: ${ep.title}`}><Icon name="spotify" />Listen</a>}
+                </span>
+              </div>
+            </li>
+          );
+        })}
+      </ol>
+      <p class="log-empty" hidden>No episodes on this topic yet.</p>
+    </div>
+  </section>
+
+  <!-- Two stages, one branch -->
+  <section class="conferences" id="conferences">
+    <div class="container">
+      <p class="mono cyan">git remote -v</p>
+      <h2>Two stages, one branch.</h2>
+      <div class="conference-grid">
+        {site.conferences.map((c) => (
+          <div class="conference">
+            <span class="mono">{c.remote}</span>
+            <h3 class={c.color}>{c.name}</h3>
+            <p>{c.text}</p>
+            {c.next && <span class="next">{c.next}</span>}
+            <a class="text-link" href={c.href} target="_blank" rel="noopener">Visit the conference site</a>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- Suggest a topic -->
+  <section class="suggest" id="suggest">
+    <div class="container suggest-inner">
+      <div class="suggest-copy">
+        <p class="mono">{site.suggest.eyebrow}</p>
+        <h2>{site.suggest.title}</h2>
+        <p>{site.suggest.text}</p>
+      </div>
+      <form class="suggest-form" data-repo={site.repo}>
+        <label for="suggest-topic">Topic or guest</label>
+        <input id="suggest-topic" name="topic" type="text" required placeholder="e.g. Platform teams that say no" />
+        <label for="suggest-why">Why it would make a good episode (optional)</label>
+        <textarea id="suggest-why" name="why" rows="3"></textarea>
+        <button type="submit">Submit for review</button>
+        <small>{site.suggest.note}</small>
+      </form>
+    </div>
+  </section>
+
+  <script is:inline>
+    (function () {
+      // Topic filter for the episode log.
+      var buttons = document.querySelectorAll('.filters button');
+      var rows = document.querySelectorAll('.commit');
+      var empty = document.querySelector('.log-empty');
+      buttons.forEach(function (btn) {
+        btn.addEventListener('click', function () {
+          var filter = btn.dataset.filter;
+          var shown = 0;
+          buttons.forEach(function (b) {
+            var on = b === btn;
+            b.classList.toggle('is-active', on);
+            b.setAttribute('aria-pressed', String(on));
+          });
+          rows.forEach(function (row) {
+            var show = filter === 'all' || row.dataset.topic === filter;
+            row.hidden = !show;
+            if (show) shown++;
+          });
+          empty.hidden = shown > 0;
+        });
+      });
+
+      // "Open a pull request": opens a prefilled GitHub issue on the site's repository.
+      var form = document.querySelector('.suggest-form');
+      form.addEventListener('submit', function (e) {
+        e.preventDefault();
+        var topic = form.topic.value.trim();
+        if (!topic) return;
+        var target = form.dataset.repo + '/issues/new?title=' + encodeURIComponent('Episode idea: ' + topic) +
+          '&body=' + encodeURIComponent(form.why.value.trim());
+        window.open(target, '_blank', 'noopener');
+      });
+    })();
+  </script>
+</Base>

@@ -1,0 +1,11 @@
+---
+// Platform icon (YouTube, Spotify, Instagram, TikTok). Shapes live in src/data/icons.json.
+import icons from '../data/icons.json';
+const { name, size = 20 } = Astro.props;
+const path = icons[name];
+---
+{path && (
+  <svg class="icon" width={size} height={size} viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+    <path d={path} />
+  </svg>
+)}
