@@ -34,4 +34,4 @@ Common edits:
 Pushing to `main` runs `.github/workflows/deploy.yml`, which builds the site and publishes it to GitHub Pages.
 In the repository settings, set **Pages → Source** to **GitHub Actions**.
 
-Without a custom domain the site is served from `https://softconf.github.io/the-main-branch/`.
+The site is served from `https://mainbranch.fm`. The custom domain is set under **Settings → Pages**; until its DNS is live the site is at `https://softconf.github.io/the-main-branch/`.
