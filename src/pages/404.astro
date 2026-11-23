@@ -1,0 +1,20 @@
+---
+import Base from '../layouts/Base.astro';
+import site from '../data/site.json';
+import { url } from '../lib.js';
+
+const watch = site.channels.find((c) => c.primary) ?? site.channels[0];
+---
+<Base title="Page not found" description="This page does not exist on the Main Branch podcast website." noindex>
+  <section class="hero container">
+    <div class="hero-copy">
+      <p class="mono cyan">fatal: not a valid object name</p>
+      <h1>Page <span class="orange">not found.</span></h1>
+      <p class="hero-pitch">This page does not exist, or it has moved. The episodes are all on the home page.</p>
+      <div class="channel-row">
+        <a class="btn btn-cyan" href={url('/#episodes')}>See the episodes</a>
+        <a class="btn btn-line" href={watch.href} target="_blank" rel="noopener">{watch.cta ?? `Watch on ${watch.label}`}</a>
+      </div>
+    </div>
+  </section>
+</Base>
