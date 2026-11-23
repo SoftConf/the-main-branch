@@ -1,0 +1,114 @@
+---
+import Base from '../../layouts/Base.astro';
+import Icon from '../../components/Icon.astro';
+import site from '../../data/site.json';
+import episodes from '../../data/episodes.json';
+import { url } from '../../lib.js';
+
+export function getStaticPaths() {
+  return episodes.map((ep) => ({ params: { slug: ep.slug }, props: { ep } }));
+}
+
+const { ep } = Astro.props;
+const pad = (n) => String(n).padStart(3, '0');
+const videoId = new URL(ep.youtube).searchParams.get('v');
+const minutes = Math.floor(ep.seconds / 60);
+const isoDuration = `PT${Math.floor(ep.seconds / 60)}M${ep.seconds % 60}S`;
+const pageUrl = new URL(url(`/episodes/${ep.slug}/`), Astro.site).href;
+const thumb = `https://i.ytimg.com/vi/${videoId}/hqdefault.jpg`;
+const sorted = [...episodes].sort((a, b) => a.number - b.number);
+const prev = sorted.find((e) => e.number === ep.number - 1);
+const next = sorted.find((e) => e.number === ep.number + 1);
+const published = new Date(ep.published).toLocaleDateString('en-GB', { day: 'numeric', month: 'long', year: 'numeric' });
+
+const jsonLd = {
+  '@context': 'https://schema.org',
+  '@graph': [
+    {
+      '@type': 'PodcastEpisode',
+      name: ep.title,
+      episodeNumber: ep.number,
+      description: ep.description,
+      datePublished: ep.published,
+      timeRequired: isoDuration,
+      inLanguage: ep.language,
+      url: pageUrl,
+      image: thumb,
+      partOfSeries: { '@type': 'PodcastSeries', name: site.name, url: new URL(url('/'), Astro.site).href },
+      associatedMedia: { '@type': 'MediaObject', contentUrl: ep.youtube },
+      actor: ep.people.map((p) => ({ '@type': 'Person', name: p.name, description: p.role })),
+    },
+    {
+      '@type': 'VideoObject',
+      name: `${site.name} ${pad(ep.number)}: ${ep.title}`,
+      description: ep.description,
+      thumbnailUrl: thumb,
+      uploadDate: ep.published,
+      duration: isoDuration,
+      inLanguage: ep.language,
+      contentUrl: ep.youtube,
+      embedUrl: `https://www.youtube-nocookie.com/embed/${videoId}`,
+    },
+  ],
+};
+---
+<Base
+  title={`${pad(ep.number)}: ${ep.title}`}
+  description={`Episode ${ep.number} of the ${site.name}, in Greek: ${ep.description}`.slice(0, 300)}
+  image={thumb}
+>
+  <script slot="head" type="application/ld+json" set:html={JSON.stringify(jsonLd)} />
+
+  <article class="episode container">
+    <p class="mono cyan">{pad(ep.number)} · {ep.topic}</p>
+    <h1>{ep.title}</h1>
+    <p class="episode-meta mono">{published} · {minutes} min · In Greek</p>
+
+    <!-- The YouTube player loads only when the visitor presses play, so the page stays fast. -->
+    <a class="episode-video" href={ep.youtube} target="_blank" rel="noopener" data-video={videoId} aria-label={`Play episode ${ep.number}: ${ep.title}`}>
+      <img src={thumb} alt="" width="480" height="360" />
+      <span class="play-button" aria-hidden="true"><Icon name="youtube" size={64} /></span>
+    </a>
+
+    <div class="channel-row">
+      <a class="btn btn-cyan" href={ep.youtube} target="_blank" rel="noopener"><Icon name="youtube" size={22} />Watch on YouTube</a>
+      {ep.spotify && <a class="channel" href={ep.spotify} target="_blank" rel="noopener"><Icon name="spotify" />Listen on Spotify</a>}
+    </div>
+
+    <div class="episode-body">
+      <section>
+        <h2>About this episode</h2>
+        <p>{ep.description}</p>
+      </section>
+      <section>
+        <h2>On the mic</h2>
+        <ul class="episode-people">
+          {ep.people.map((p) => <li><strong>{p.name}</strong><span>{p.role}</span></li>)}
+        </ul>
+      </section>
+    </div>
+
+    <nav class="episode-nav mono" aria-label="More episodes">
+      {prev ? <a href={url(`/episodes/${prev.slug}/`)}>← {pad(prev.number)} {prev.title}</a> : <span></span>}
+      <a href={url('/#episodes')}>All episodes</a>
+      {next ? <a href={url(`/episodes/${next.slug}/`)}>{pad(next.number)} {next.title} →</a> : <span></span>}
+    </nav>
+  </article>
+
+  <script is:inline>
+    document.querySelectorAll('[data-video]').forEach(function (link) {
+      link.addEventListener('click', function (e) {
+        e.preventDefault();
+        var frame = document.createElement('iframe');
+        frame.src = 'https://www.youtube-nocookie.com/embed/' + link.dataset.video + '?autoplay=1';
+        frame.title = link.getAttribute('aria-label');
+        frame.allow = 'accelerometer; autoplay; encrypted-media; picture-in-picture';
+        frame.allowFullscreen = true;
+        var box = document.createElement('div');
+        box.className = 'episode-video';
+        box.appendChild(frame);
+        link.replaceWith(box);
+      });
+    });
+  </script>
+</Base>

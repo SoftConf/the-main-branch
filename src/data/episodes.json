@@ -2,33 +2,78 @@
   {
     "number": 3,
     "title": "From Junior to Staff/Principal Engineer in SKG",
+    "slug": "003-from-junior-to-staff-principal-engineer-in-skg",
     "guests": "Lefteris Chrysochoidis and Konstantinos Ziazios",
     "branch": "guest/chrysochoidis-ziazios",
     "topic": "Careers",
     "date": "7 Oct 2026",
     "duration": "45 min",
     "youtube": "https://www.youtube.com/watch?v=cmIL24wfWZc",
-    "spotify": "https://open.spotify.com/episode/0ByVuqM9Dw3dxvQbHJ7QOp"
+    "spotify": "https://open.spotify.com/episode/0ByVuqM9Dw3dxvQbHJ7QOp",
+    "published": "2026-10-07",
+    "seconds": 2717,
+    "language": "el",
+    "description": "The third episode hosts two exceptional guests, Lefteris Chrysochoidis, sharing the perspective of a Principal Engineer, and Konstantinos Ziazios, representing the role of a Community Builder.",
+    "people": [
+      {
+        "name": "Lefteris Chrysochoidis",
+        "role": "Principal Engineer"
+      },
+      {
+        "name": "Konstantinos Ziazios",
+        "role": "Community Builder"
+      }
+    ]
   },
   {
     "number": 2,
     "title": "The Salonica Tech Boom",
+    "slug": "002-the-salonica-tech-boom",
     "guests": "Dr. Alexandros Chatzigeorgiou (University of Macedonia) and Costas Vasiliou (Schoox)",
     "branch": "guest/chatzigeorgiou-vasiliou",
     "topic": "Ecosystem",
     "date": "25 Aug 2026",
     "duration": "45 min",
     "youtube": "https://www.youtube.com/watch?v=msjbmpkmtks",
-    "spotify": "https://open.spotify.com/episode/7EACXnAaOGSbYbqzcWfKir"
+    "spotify": "https://open.spotify.com/episode/7EACXnAaOGSbYbqzcWfKir",
+    "published": "2026-08-25",
+    "seconds": 2730,
+    "language": "el",
+    "description": "The second episode hosts two exceptional guests, Dr. Alexandros Chatzigeorgiou, Professor at the Department of Applied Informatics, University of Macedonia, and Costas Vasiliou, Co-Founder and Chief Customer Officer at Schoox.",
+    "people": [
+      {
+        "name": "Dr. Alexandros Chatzigeorgiou",
+        "role": "Professor, Department of Applied Informatics, University of Macedonia"
+      },
+      {
+        "name": "Costas Vasiliou",
+        "role": "Co-Founder and Chief Customer Officer, Schoox"
+      }
+    ]
   },
   {
     "number": 1,
     "title": "The Reverse Pull Request",
+    "slug": "001-the-reverse-pull-request",
     "note": "Initial commit · the story of Voxxed Days Thessaloniki since 2016 · guest host Stavros Korokithakis, reversed guest Patroklos Papapetrou",
     "topic": "Community",
     "date": "3 Jul 2026",
     "duration": "40 min",
     "youtube": "https://www.youtube.com/watch?v=kE011d38KEw",
-    "spotify": "https://open.spotify.com/episode/2AquG5fGBtmLq7gDMOdZE6"
+    "spotify": "https://open.spotify.com/episode/2AquG5fGBtmLq7gDMOdZE6",
+    "published": "2026-07-03",
+    "seconds": 2408,
+    "language": "el",
+    "description": "The first episode of the Main Branch is dedicated to a nostalgic discussion about the very first Voxxed Days Thessaloniki back in 2016 and the adventure until today.",
+    "people": [
+      {
+        "name": "Stavros Korokithakis",
+        "role": "Guest host"
+      },
+      {
+        "name": "Patroklos Papapetrou",
+        "role": "Reversed guest"
+      }
+    ]
   }
 ]

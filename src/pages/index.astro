@@ -55,7 +55,6 @@ const jsonLd = {
         {list.map((ep, i) => {
           const head = i === 0;
           const branch = !head && Boolean(ep.branch);
-          const main = ep.youtube ?? ep.spotify;
           return (
             <li class:list={['commit', { 'is-head': head, 'is-branch': branch }]} data-topic={ep.topic}>
               <div class="graph" aria-hidden="true">
@@ -71,7 +70,7 @@ const jsonLd = {
               <div class="commit-body">
                 <span class="mono commit-id">{pad(ep.number)}{head && ' · HEAD'}</span>
                 <div class="commit-title">
-                  <a href={main} target="_blank" rel="noopener">{ep.title}</a>
+                  <a href={url(`/episodes/${ep.slug}/`)}>{ep.title}</a>
                   {ep.guests
                     ? <span>{branch && <><span class="mono orange">{ep.branch}</span> · </>}with {ep.guests}{branch && ' · merged into main'}</span>
                     : ep.note && <span>{ep.note}</span>}

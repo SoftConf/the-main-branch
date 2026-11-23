@@ -13,5 +13,7 @@ export default defineConfig({
   site,
   base,
   trailingSlash: 'always',
+  // The episode list lives on the home page.
+  redirects: { '/episodes/': `${base.replace(/\/$/, '')}/#episodes` },
   integrations: [sitemap()],
 });
